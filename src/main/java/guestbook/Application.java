@@ -63,7 +63,9 @@ public class Application {
 					new GuestbookEntry("H4xx0r", "first!!!"), //
 					new GuestbookEntry("Arni", "Hasta la vista, baby"), //
 					new GuestbookEntry("Duke Nukem",
-							"It's time to kick ass and chew bubble gum. And I'm all out of gum."), //
+							"It's time to kick ass and chew bubble gum. And I'm all out of gum."),
+					new GuestbookEntry("Yoko Taro",
+							"This is such a beautiful guestbook... I wish YORHA 9S or 2B where here to enjoy it with me"),//
 					new GuestbookEntry("Gump1337",
 							"Mama always said life was like a box of chocolates. You never know what you're gonna get.")) //
 					.forEach(guestbook::save);

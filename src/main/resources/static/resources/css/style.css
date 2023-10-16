@@ -7,6 +7,19 @@ div#entries, #form {
 	margin-bottom: 2em;
 }
 
+.nierChar {
+	animation: pop-in 0.8s ease-in-out;
+}
+
+@keyframes pop-in {
+	0% {
+		transform: scale(0);
+	}
+	100% {
+		transform: scale(5);
+	}
+}
+
 .card-title {
 	margin-bottom: 0;
 }

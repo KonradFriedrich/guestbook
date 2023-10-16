@@ -23,6 +23,9 @@ import jakarta.persistence.Id;
 
 import org.springframework.util.Assert;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * A guestbook entry. An entity as in the Domain Driven Design context. Mapped onto the database using JPA annotations.
  *
@@ -34,8 +37,9 @@ import org.springframework.util.Assert;
 class GuestbookEntry {
 
 	private @Id @GeneratedValue Long id;
-	private final String name, text;
+	private String name, nachname, text;
 	private final LocalDateTime date;
+	private boolean isNier;
 
 	/**
 	 * Creates a new {@link GuestbookEntry} for the given name and text.
@@ -48,20 +52,49 @@ class GuestbookEntry {
 		Assert.hasText(name, "Name must not be null or empty!");
 		Assert.hasText(text, "Text must not be null or empty!");
 
-		this.name = name;
+		Pattern p = Pattern.compile("^([\\w\\s]*?)\\s*(\\w*)\\s*$");
+		Matcher m = p.matcher(name);
+
+		this.isNier = false;
+
+		if (name.toLowerCase().matches("^yorha[\\s\\w]*(9s|2b)[\\s\\w]*$")) {
+			System.out.println(name.toLowerCase().matches("^yorha[\\s\\w]*(9s|2b)[\\s\\w]*$"));
+			//private boolean running = true;
+			this.isNier= true;
+		}
+
+		if (m.find() && m.group(1).length() > 0) {
+			this.name = m.group(1);
+			this.nachname = m.group(2);
+		} else {
+			this.name = name;
+			this.nachname = "";
+		}
+
 		this.text = text;
 		this.date = LocalDateTime.now();
+		System.out.println("Name: " + this.name + " Nachname: " + this.nachname);
 	}
 
 	@SuppressWarnings("unused")
 	private GuestbookEntry() {
 		this.name = null;
+		this.nachname = null;
 		this.text = null;
 		this.date = null;
+		this.isNier = false;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public String getNachname() {
+		return nachname;
+	}
+
+	public boolean getIsNier() {
+		return isNier;
 	}
 
 	public Long getId() {

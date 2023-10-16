@@ -21,7 +21,9 @@
 
 		<div id="entries" class="mx-auto">			
 			<div th:each="entry, it : ${entries}" th:with="index = ${it.count}" th:fragment="entries">
-				<div class="card" th:fragment="entry" th:id="entry+${entry.id}">
+				<div class="card" th:fragment="entry" th:id="entry+${entry.id}"
+					th:classappend="${entry.isNier} ? nierChar : normalChar"
+				>
 					<div class="card-header">
 						<form sec:authorize="hasRole('ADMIN')" th:method="delete" th:action="@{/guestbook/{id}(id=${entry.id})}" th:attr="data-entry-id=${entry.id}">
 							<button th:title="#{guestbook.form.delete}" class="btn btn-sm float-right"
@@ -30,7 +32,13 @@
 								<span class="fas fa-times"></span>
 							</button>
 						</form>
-						<h4 th:text="${index} + '. ' + ${entry.name}" class="card-title">1. Posting</h4>
+						<h4 th:if="${entry.nachname.length() > 0}"
+							th:text="${index} + '. Vorname(n): ' + ${entry.name} + ' - Nachname: ' + ${entry.nachname}"
+							class="card-title"
+						>1. Posting</h4>
+						<h4 th:unless="${entry.nachname.length() > 0}"
+							th:text="${index} + '. ' + ${entry.name}" class="card-title"
+						>1. Posting</h4>
 					</div>
 					<div class="card-body">
 						<blockquote class="entrytext" th:text="${entry.text}"></blockquote>
