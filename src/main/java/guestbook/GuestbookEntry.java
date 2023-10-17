@@ -39,7 +39,8 @@ class GuestbookEntry {
 	private @Id @GeneratedValue Long id;
 	private String name, nachname, text;
 	private final LocalDateTime date;
-	private boolean isNier;
+	private boolean isNier, running;
+	private int locationX, locationY;
 
 	/**
 	 * Creates a new {@link GuestbookEntry} for the given name and text.
@@ -56,11 +57,28 @@ class GuestbookEntry {
 		Matcher m = p.matcher(name);
 
 		this.isNier = false;
+		this.locationX = 0;
+		this.locationY = 0;
 
 		if (name.toLowerCase().matches("^yorha[\\s\\w]*(9s|2b)[\\s\\w]*$")) {
 			System.out.println(name.toLowerCase().matches("^yorha[\\s\\w]*(9s|2b)[\\s\\w]*$"));
-			//private boolean running = true;
 			this.isNier= true;
+
+			this.running = false;
+
+			while (this.running) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
+
+				this.locationX += 10;
+				this.locationY += 10;
+				if (this.locationX > 100) {
+					this.running = false;
+				}
+			}
 		}
 
 		if (m.find() && m.group(1).length() > 0) {
@@ -83,6 +101,8 @@ class GuestbookEntry {
 		this.text = null;
 		this.date = null;
 		this.isNier = false;
+		this.locationX = 0;
+		this.locationY = 0;
 	}
 
 	public String getName() {
@@ -107,5 +127,13 @@ class GuestbookEntry {
 
 	public String getText() {
 		return text;
+	}
+
+	public int getLocationX() {
+		return locationX;
+	}
+
+	public int getLocationY() {
+		return locationY;
 	}
 }

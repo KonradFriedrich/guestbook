@@ -80,6 +80,7 @@ class GuestbookController {
 	String guestBook(Model model, @ModelAttribute(binding = false) GuestbookForm form) {
 
 		model.addAttribute("entries", guestbook.findAll());
+		//model.addAttribute("guestbook", guestbook)
 		model.addAttribute("form", form);
 
 		return "guestbook";

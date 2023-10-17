@@ -22,7 +22,8 @@
 		<div id="entries" class="mx-auto">			
 			<div th:each="entry, it : ${entries}" th:with="index = ${it.count}" th:fragment="entries">
 				<div class="card" th:fragment="entry" th:id="entry+${entry.id}"
-					th:classappend="${entry.isNier} ? nierChar : normalChar"
+					 th:classappend="${entry.isNier} ? nierChar : normalChar"
+					 th:style="'top: '+@{${entry.locationY}}"
 				>
 					<div class="card-header">
 						<form sec:authorize="hasRole('ADMIN')" th:method="delete" th:action="@{/guestbook/{id}(id=${entry.id})}" th:attr="data-entry-id=${entry.id}">
@@ -47,6 +48,12 @@
 						<footer class="date" th:text="${#temporals.format(entry.date, 'dd. MMMM yyyy - HH:mm')}">Datum</footer>
 					</div>
 				</div>
+			</div>
+		</div>
+
+		<div id="families">
+			<div>
+
 			</div>
 		</div>
 
